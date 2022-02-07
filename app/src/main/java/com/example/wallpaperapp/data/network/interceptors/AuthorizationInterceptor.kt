@@ -8,8 +8,12 @@ class AuthorizationInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
         val newRequest = request.newBuilder()
-            .addHeader("Authorization", API_KEY)
+            .addHeader(AUTH_HEADER_NAME, API_KEY)
             .build()
         return chain.proceed(newRequest)
+    }
+
+    companion object {
+        private const val AUTH_HEADER_NAME = "Authorization"
     }
 }
