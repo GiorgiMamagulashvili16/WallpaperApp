@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_black"
+    tools:context=".presentation.wallpapers_screen.WallpapersFragment">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/wallpaperTxtTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimens_20_dp"
+        android:layout_marginTop="@dimen/dimens_20_dp"
+        android:text="@string/wallpapers"
+        android:textColor="@color/purple"
+        android:textSize="@dimen/dimens_31_sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/categoryRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimens_0_dp"
+        android:layout_marginTop="@dimen/dimens_8_dp"
+        android:padding="@dimen/dimens_10_dp"
+        app:layout_constraintHeight_percent="0.17"
+        app:layout_constraintTop_toBottomOf="@id/wallpaperTxtTextView" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/imagesRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimens_0_dp"
+        android:layout_margin="@dimen/dimens_5_dp"
+        android:padding="@dimen/dimens_5_dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/categoryRecyclerView"
+        tools:layout_editor_absoluteX="0dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
