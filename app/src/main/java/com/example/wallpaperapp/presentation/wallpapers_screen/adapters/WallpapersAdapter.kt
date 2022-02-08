@@ -1,25 +1,25 @@
 package com.example.wallpaperapp.presentation.wallpapers_screen.adapters
 
+import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.wallpaperapp.databinding.WallpaperImageItemBinding
 import com.example.wallpaperapp.domain.models.Photo
 import com.example.wallpaperapp.domain.util.ItemDiffUtil
 import com.example.wallpaperapp.domain.util.extensions.loadImage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+
+typealias onImageClick = (image: String) -> Unit
 
 class WallpapersAdapter : ListAdapter<Photo, WallpapersAdapter.WallpaperVH>(ItemDiffUtil<Photo>()) {
 
-    class WallpaperVH(private val binding: WallpaperImageItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        fun onBind(photo: Photo) {
-            with(binding) {
-               wallpaperImageView.loadImage(photo.url)
-            }
-        }
-    }
-
+    lateinit var onImageClick: onImageClick
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WallpaperVH {
         return WallpaperVH(
             WallpaperImageItemBinding.inflate(
@@ -31,6 +31,21 @@ class WallpapersAdapter : ListAdapter<Photo, WallpapersAdapter.WallpaperVH>(Item
     }
 
     override fun onBindViewHolder(holder: WallpaperVH, position: Int) {
-        holder.onBind(getItem(position))
+        holder.onBind(getItem(position), onImageClick)
+    }
+
+    class WallpaperVH(private val binding: WallpaperImageItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun onBind(photo: Photo, onImageClick: onImageClick) {
+            with(binding) {
+                wallpaperImageView.loadImage(photo.src.portrait)
+
+                root.setOnClickListener {
+                    onImageClick.invoke(
+                       photo.src.portrait
+                    )
+                }
+            }
+        }
     }
 }

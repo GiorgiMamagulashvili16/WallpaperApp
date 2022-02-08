@@ -20,9 +20,8 @@ class WallpapersViewModel(private val imagesRepository: ImagesRepository) : View
     init {
         getWallpapers()
     }
-    fun getWallpapers() = viewModelScope.launch(Dispatchers.IO) {
-        val response = imagesRepository.getImages("android", 1)
-        when (response) {
+    private fun getWallpapers() = viewModelScope.launch(Dispatchers.IO) {
+        when (val response = imagesRepository.getImages("android", 1)) {
             is Resource.Success -> {
                 wallpapersScreenStateFlow.emit(WallpapersScreenStates.Success(response.data))
             }

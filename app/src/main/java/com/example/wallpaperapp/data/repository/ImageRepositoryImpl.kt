@@ -1,5 +1,6 @@
 package com.example.wallpaperapp.data.repository
 
+import android.util.Log.d
 import com.example.wallpaperapp.data.mappers.PhotoDtoMapper
 import com.example.wallpaperapp.data.network.api.WallpapersApiService
 import com.example.wallpaperapp.domain.models.Photo
@@ -19,10 +20,11 @@ class ImageRepositoryImpl(
             return@withContext fetchData(responseCall = {
                 wallpapersApiService.getPhotos(
                     query,
-                    page
+                    page = page
                 )
             }, call = {
-                val result = photoDtoMapper.mapToList(it.photoDtos)
+                val result = photoDtoMapper.mapToList(it.photos)
+                d("ERRORSTA","$result")
                 Resource.Success(result)
             })
         }

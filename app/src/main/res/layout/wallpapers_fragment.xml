@@ -35,6 +35,7 @@
         android:layout_height="@dimen/dimens_0_dp"
         android:layout_margin="@dimen/dimens_5_dp"
         android:padding="@dimen/dimens_5_dp"
+        tools:listitem="@layout/wallpaper_image_item"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/categoryRecyclerView"
         tools:layout_editor_absoluteX="0dp" />

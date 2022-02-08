@@ -8,7 +8,7 @@ data class ImageResponseDto(
     val page: Int,
     @SerializedName("per_page")
     val perPage: Int,
-    val photoDtos: List<PhotoDto>,
+    val photos: List<PhotoDto>,
     @SerializedName("total_results")
     val totalResults: Int
 )
