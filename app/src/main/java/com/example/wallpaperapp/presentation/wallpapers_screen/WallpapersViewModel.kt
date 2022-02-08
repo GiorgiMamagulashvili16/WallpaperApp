@@ -2,6 +2,7 @@ package com.example.wallpaperapp.presentation.wallpapers_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.wallpaperapp.domain.models.Category
 import com.example.wallpaperapp.domain.repository.ImagesRepository
 import com.example.wallpaperapp.domain.util.Resource
 import kotlinx.coroutines.Dispatchers
@@ -17,11 +18,18 @@ class WallpapersViewModel(private val imagesRepository: ImagesRepository) : View
     val wallpapersScreenState: StateFlow<WallpapersScreenStates> =
         wallpapersScreenStateFlow.asStateFlow()
 
+    private val categoriesStateFlow =
+        MutableStateFlow<List<Category>>(emptyList())
+    val categories: StateFlow<List<Category>> =
+        categoriesStateFlow.asStateFlow()
+
     init {
         getWallpapers()
     }
+
     private fun getWallpapers() = viewModelScope.launch(Dispatchers.IO) {
-        when (val response = imagesRepository.getImages("android", 1)) {
+        when (val response =
+            imagesRepository.getImages(CategoriesEnum.PROGRAMMING.category.categoryName, 1)) {
             is Resource.Success -> {
                 wallpapersScreenStateFlow.emit(WallpapersScreenStates.Success(response.data))
             }
@@ -29,5 +37,13 @@ class WallpapersViewModel(private val imagesRepository: ImagesRepository) : View
                 wallpapersScreenStateFlow.emit(WallpapersScreenStates.Error(response.message))
             }
         }
+    }
+
+     fun setCategories() = viewModelScope.launch(Dispatchers.IO) {
+        val categoriesList = mutableListOf<Category>()
+        CategoriesEnum.values().forEach {
+            categoriesList.add(it.category)
+        }
+         categoriesStateFlow.emit(categoriesList)
     }
 }

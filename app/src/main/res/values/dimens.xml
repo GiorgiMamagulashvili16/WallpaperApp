@@ -14,4 +14,7 @@
     <dimen name="dimens_24_dp">24dp</dimen>
     <dimen name="dimens_4_dp">4dp</dimen>
     <dimen name="dimens_140_dp">140dp</dimen>
+    <dimen name="dimens_80_dp">80dp</dimen>
+    <dimen name="dimens_200_dp">200dp</dimen>
+    <dimen name="dimens_21_sp">21sp</dimen>
 </resources>

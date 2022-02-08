@@ -1,14 +1,16 @@
 package com.example.wallpaperapp.presentation.wallpapers_screen
 
-import androidx.lifecycle.lifecycleScope
+import android.util.Log
+import android.util.Log.d
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.wallpaperapp.R
 import com.example.wallpaperapp.databinding.WallpapersFragmentBinding
+import com.example.wallpaperapp.domain.util.extensions.flowObserver
 import com.example.wallpaperapp.presentation.base.BaseFragment
 import com.example.wallpaperapp.presentation.base.Inflate
+import com.example.wallpaperapp.presentation.wallpapers_screen.adapters.CategoryAdapter
 import com.example.wallpaperapp.presentation.wallpapers_screen.adapters.WallpapersAdapter
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 import kotlin.reflect.KClass
 
 class WallpapersFragment : BaseFragment<WallpapersFragmentBinding, WallpapersViewModel>() {
@@ -20,12 +22,14 @@ class WallpapersFragment : BaseFragment<WallpapersFragmentBinding, WallpapersVie
     }
 
     private val wallpapersAdapter by lazy { WallpapersAdapter() }
+    private val categoryAdapter by lazy { CategoryAdapter() }
     override fun onBindViewModel(viewModel: WallpapersViewModel) {
         observeWallpapers(viewModel)
-        setMotionTransitions()
+        setMotionTransitions(viewModel)
+        observeCategories(viewModel)
     }
 
-    private fun setMotionTransitions() {
+    private fun setMotionTransitions(viewModel: WallpapersViewModel) {
         with(binding)
         {
             searchImageView.setOnClickListener {
@@ -41,36 +45,53 @@ class WallpapersFragment : BaseFragment<WallpapersFragmentBinding, WallpapersVie
             }
             menuImageView.setOnClickListener {
                 with(root) {
+                    viewModel.setCategories()
                     setTransition(R.id.menuMotion)
                     transitionToEnd()
                     if (currentState == R.id.menuMotionStart)
                         transitionToEnd()
-                    else
+                    else{
+                        viewModel.setCategories()
                         transitionToStart()
+                    }
+
                 }
             }
         }
     }
 
+    private fun observeCategories(viewModel: WallpapersViewModel) {
+        flowObserver(viewModel.categories) {
+            initCategoryRecycle()
+            categoryAdapter.submitList(it)
+            d("ITEM","$it")
+        }
+    }
 
     private fun observeWallpapers(viewModel: WallpapersViewModel) {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.wallpapersScreenState.collect {
-                when (it) {
-                    is WallpapersScreenStates.Success -> {
-                        initRecyclerView()
-                        wallpapersAdapter.submitList(
-                            it.data
-                        )
-                    }
-                    is WallpapersScreenStates.Error -> {
-                    }
-                    is WallpapersScreenStates.Loading -> {
-
-                    }
-                    else -> Unit
+        flowObserver(viewModel.wallpapersScreenState) {
+            when (it) {
+                is WallpapersScreenStates.Success -> {
+                    initRecyclerView()
+                    wallpapersAdapter.submitList(
+                        it.data
+                    )
                 }
+                is WallpapersScreenStates.Error -> {
+                }
+                is WallpapersScreenStates.Loading -> {
+
+                }
+                else -> Unit
             }
+        }
+    }
+
+    private fun initCategoryRecycle() {
+        with(binding.categoryRecyclerView) {
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            adapter = categoryAdapter
         }
     }
 

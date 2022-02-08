@@ -5,14 +5,14 @@
         android:id="@+id/searchBarMotion"
         motion:constraintSetEnd="@+id/searchBarMotionEnd"
         motion:constraintSetStart="@id/searchBarMotionStart"
-        motion:duration="1000">
+        motion:duration="600">
 
     </Transition>
     <Transition
         android:id="@+id/menuMotion"
         motion:constraintSetEnd="@+id/menuMotionEnd"
         motion:constraintSetStart="@id/menuMotionStart"
-        motion:duration="1000">
+        motion:duration="600">
 
         <KeyFrameSet></KeyFrameSet>
     </Transition>
