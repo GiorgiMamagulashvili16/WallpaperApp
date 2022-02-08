@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+    <Transition
+        android:id="@+id/searchBarMotion"
+        motion:constraintSetEnd="@+id/searchBarMotionEnd"
+        motion:constraintSetStart="@id/searchBarMotionStart"
+        motion:duration="1000">
+
+    </Transition>
+    <Transition
+        android:id="@+id/menuMotion"
+        motion:constraintSetEnd="@+id/menuMotionEnd"
+        motion:constraintSetStart="@id/menuMotionStart"
+        motion:duration="1000">
+
+        <KeyFrameSet></KeyFrameSet>
+    </Transition>
+
+    <ConstraintSet android:id="@+id/menuMotionStart"></ConstraintSet>
+
+    <ConstraintSet android:id="@+id/menuMotionEnd">
+        <Constraint
+            android:id="@+id/categoryRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimens_140_dp"
+            android:layout_marginTop="@dimen/dimens_6_dp"
+            motion:layout_constraintTop_toBottomOf="@id/wallpaperTxtTextView" />
+        <Constraint
+            android:id="@+id/menuImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dimens_20_dp"
+            android:scaleY="-1"
+            motion:layout_constraintBottom_toBottomOf="@+id/wallpaperTxtTextView"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintTop_toTopOf="@+id/wallpaperTxtTextView" />
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/searchBarMotionStart">
+        <Constraint
+            android:id="@+id/wallpaperTxtTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimens_24_dp"
+            android:layout_marginTop="@dimen/dimens_4_dp"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toTopOf="parent">
+            <CustomAttribute
+                motion:attributeName="textSize"
+                motion:customFloatValue="20" />
+        </Constraint>
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/searchBarMotionEnd">
+
+        <Constraint
+            android:id="@+id/searchEditText"
+            android:layout_width="@dimen/dimens_0_dp"
+            android:layout_height="@dimen/dimens_40_dp"
+            android:visibility="visible"
+            motion:layout_constraintEnd_toStartOf="@id/searchImageView"
+            motion:layout_constraintStart_toEndOf="@id/wallpaperTxtTextView" />
+        <Constraint
+            android:id="@+id/wallpaperTxtTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimens_24_dp"
+            android:layout_marginTop="@dimen/dimens_4_dp"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@+id/wallpaperTxtTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimens_8_dp"
+            android:layout_marginTop="@dimen/dimens_4_dp"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toTopOf="parent">
+            <CustomAttribute
+                motion:attributeName="textSize"
+                motion:customFloatValue="14" />
+        </Constraint>
+
+    </ConstraintSet>
+</MotionScene>
