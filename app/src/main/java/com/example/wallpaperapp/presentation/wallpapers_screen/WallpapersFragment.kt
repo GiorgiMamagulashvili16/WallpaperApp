@@ -1,11 +1,13 @@
 package com.example.wallpaperapp.presentation.wallpapers_screen
 
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.wallpaperapp.databinding.WallpapersFragmentBinding
 import com.example.wallpaperapp.presentation.base.BaseFragment
 import com.example.wallpaperapp.presentation.base.Inflate
 import com.example.wallpaperapp.presentation.wallpapers_screen.adapters.WallpapersAdapter
+import com.example.wallpaperapp.presentation.wallpapers_screen.adapters.listeners.WallpapersAdapterScrollListener
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlin.reflect.KClass
@@ -21,6 +23,8 @@ class WallpapersFragment : BaseFragment<WallpapersFragmentBinding, WallpapersVie
     private val wallpapersAdapter by lazy { WallpapersAdapter() }
     override fun onBindViewModel(viewModel: WallpapersViewModel) {
         observeWallpapers(viewModel)
+        initRecyclerView(viewModel)
+        viewModel.getWallpapers()
     }
 
 
@@ -29,26 +33,31 @@ class WallpapersFragment : BaseFragment<WallpapersFragmentBinding, WallpapersVie
             viewModel.wallpapersScreenState.collect {
                 when (it) {
                     is WallpapersScreenStates.Success -> {
-                        initRecyclerView()
-                        wallpapersAdapter.submitList(
-                            it.data
-                        )
+                        wallpapersAdapter.submitList(it.data)
+                        binding.wallpaperProgressBar.isVisible = false
                     }
                     is WallpapersScreenStates.Error -> {
+                        binding.wallpaperProgressBar.isVisible = false
                     }
                     is WallpapersScreenStates.Loading -> {
-
+                        binding.wallpaperProgressBar.isVisible = true
                     }
                     else -> Unit
                 }
+                viewModel.resetStateFlow()
             }
         }
     }
 
-    private fun initRecyclerView() {
+    private fun initRecyclerView(viewModel: WallpapersViewModel) {
         with(binding.imagesRecyclerView) {
             layoutManager = GridLayoutManager(requireContext(), 2)
             adapter = wallpapersAdapter
+            val manager = layoutManager as GridLayoutManager
+            val scrollListener = WallpapersAdapterScrollListener(manager){
+                viewModel.getWallpapers()
+            }
+            addOnScrollListener(scrollListener)
         }
     }
 }

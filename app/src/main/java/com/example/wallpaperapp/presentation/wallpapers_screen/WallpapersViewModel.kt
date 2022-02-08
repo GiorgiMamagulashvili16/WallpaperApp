@@ -2,6 +2,7 @@ package com.example.wallpaperapp.presentation.wallpapers_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.wallpaperapp.domain.models.Photo
 import com.example.wallpaperapp.domain.repository.ImagesRepository
 import com.example.wallpaperapp.domain.util.Resource
 import kotlinx.coroutines.Dispatchers
@@ -11,23 +12,30 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class WallpapersViewModel(private val imagesRepository: ImagesRepository) : ViewModel() {
+    private var page = 1
 
     private val wallpapersScreenStateFlow =
         MutableStateFlow<WallpapersScreenStates>(WallpapersScreenStates.Idle)
     val wallpapersScreenState: StateFlow<WallpapersScreenStates> =
         wallpapersScreenStateFlow.asStateFlow()
 
-    init {
-        getWallpapers()
-    }
-    private fun getWallpapers() = viewModelScope.launch(Dispatchers.IO) {
-        when (val response = imagesRepository.getImages("android", 1)) {
+    private val currentWallpapers = mutableListOf<Photo>()
+
+    fun getWallpapers() = viewModelScope.launch(Dispatchers.IO) {
+        wallpapersScreenStateFlow.value = WallpapersScreenStates.Loading
+        when (val response = imagesRepository.getImages("jdm", page)) {
             is Resource.Success -> {
-                wallpapersScreenStateFlow.emit(WallpapersScreenStates.Success(response.data))
+                currentWallpapers.addAll(response.data)
+                wallpapersScreenStateFlow.emit(WallpapersScreenStates.Success(currentWallpapers.toList()))
+                page++
             }
             is Resource.Error -> {
                 wallpapersScreenStateFlow.emit(WallpapersScreenStates.Error(response.message))
             }
         }
+    }
+
+    fun resetStateFlow(){
+        wallpapersScreenStateFlow.value = WallpapersScreenStates.Idle
     }
 }
