@@ -11,11 +11,12 @@
         android:id="@+id/wallpaperTxtTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimens_20_dp"
-        android:layout_marginTop="@dimen/dimens_20_dp"
         android:text="@string/wallpapers"
-        android:textColor="@color/purple"
-        android:textSize="@dimen/dimens_31_sp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dimens_20_sp"
+        android:fontFamily="@font/mplus_rounded1c_medium"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,30 +24,37 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/categoryRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimens_0_dp"
-        android:layout_marginTop="@dimen/dimens_8_dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/dimens_6_dp"
         android:padding="@dimen/dimens_10_dp"
-        app:layout_constraintHeight_percent="0.17"
         app:layout_constraintTop_toBottomOf="@id/wallpaperTxtTextView" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/imagesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimens_0_dp"
-        android:layout_margin="@dimen/dimens_5_dp"
-        android:padding="@dimen/dimens_5_dp"
         tools:listitem="@layout/wallpaper_image_item"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/categoryRecyclerView"
         tools:layout_editor_absoluteX="0dp" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/searchFloatingButton"
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/searchImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimens_20_dp"
-        app:fabCustomSize="@dimen/dimens_65_dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:src="@drawable/ic_find_icon"
+        android:layout_marginEnd="@dimen/dimens_20_dp"
+        app:layout_constraintBottom_toBottomOf="@+id/wallpaperTxtTextView"
+        app:layout_constraintEnd_toStartOf="@+id/menuImageView"
+        app:layout_constraintTop_toTopOf="@+id/wallpaperTxtTextView" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/menuImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimens_20_dp"
+        android:src="@drawable/ic_arrow_down"
+        app:layout_constraintBottom_toBottomOf="@+id/wallpaperTxtTextView"
         app:layout_constraintEnd_toEndOf="parent"
-        android:contentDescription="@string/floatingdesc" />
+        app:layout_constraintTop_toTopOf="@+id/wallpaperTxtTextView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

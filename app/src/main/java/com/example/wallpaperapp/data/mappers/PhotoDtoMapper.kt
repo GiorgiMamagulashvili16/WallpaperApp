@@ -6,7 +6,7 @@ import com.example.wallpaperapp.domain.models.Photo
 class PhotoDtoMapper(private val srcDtoMapper: SrcDtoMapper) : Mapper<PhotoDto, Photo> {
     override fun mapModel(model: PhotoDto): Photo {
         with(model) {
-            return Photo(id, height, width, srcDtoMapper.mapModel(src), url)
+            return Photo(id, alt, height, width, srcDtoMapper.mapModel(src), url)
         }
     }
 }

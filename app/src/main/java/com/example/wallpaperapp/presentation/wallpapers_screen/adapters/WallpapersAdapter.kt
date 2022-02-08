@@ -39,11 +39,10 @@ class WallpapersAdapter : ListAdapter<Photo, WallpapersAdapter.WallpaperVH>(Item
         fun onBind(photo: Photo, onImageClick: onImageClick) {
             with(binding) {
                 wallpaperImageView.loadImage(photo.src.portrait)
+                wallpaperTitleTextView.text = photo.alt
 
                 root.setOnClickListener {
-                    onImageClick.invoke(
-                       photo.src.portrait
-                    )
+                    onImageClick.invoke(photo.src.portrait)
                 }
             }
         }
