@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">WallpaperApp</string>
     <string name="wallpapers">Wallpapers</string>
+    <string name="floatingdesc">floatingDesc</string>
 </resources>
