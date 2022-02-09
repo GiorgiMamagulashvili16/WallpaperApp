@@ -8,6 +8,8 @@ import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import com.example.wallpaperapp.R
 import com.example.wallpaperapp.databinding.WallpapersFragmentBinding
+import com.example.wallpaperapp.domain.util.extensions.setActionOnSpecifiedProgress
+import com.example.wallpaperapp.domain.util.extensions.setDrawableImage
 import com.example.wallpaperapp.domain.util.extensions.flowObserver
 import com.example.wallpaperapp.presentation.base.BaseFragment
 import com.example.wallpaperapp.presentation.base.Inflate
@@ -33,6 +35,7 @@ class WallpapersFragment : BaseFragment<WallpapersFragmentBinding, WallpapersVie
         observeWallpapers(viewModel)
         initRecyclerView(viewModel)
         viewModel.getWallpapers()
+        setMenuIconChangeListener()
         setMotionTransitions(viewModel)
         observeCategories(viewModel)
         configureSearch(viewModel)
@@ -114,7 +117,22 @@ class WallpapersFragment : BaseFragment<WallpapersFragmentBinding, WallpapersVie
                 viewModel.getWallpapers()
             }
             addOnScrollListener(scrollListener)
-            initCategoriesRecycler()
+        }
+    }
+
+    private fun setMenuIconChangeListener() {
+        with(binding) {
+            searchBarContainer.setActionOnSpecifiedProgress(0.4f, {
+                searchImageView.setDrawableImage(
+                    requireContext(),
+                    R.drawable.ic_find_icon
+                )
+            }) {
+                searchImageView.setDrawableImage(
+                    requireContext(),
+                    R.drawable.ic_close
+                )
+            }
         }
     }
 

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetEnd="@+id/searchBarMotionEnd"
+        motion:constraintSetStart="@id/searchBarMotionStart"
+        motion:duration="800">
+        <OnClick motion:targetId="@id/searchImageView" />
+        <KeyFrameSet></KeyFrameSet>
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start"></ConstraintSet>
+
+    <ConstraintSet android:id="@+id/searchBarMotionStart">
+        <Constraint
+            android:id="@+id/searchEditText"
+            android:layout_width="@dimen/dimens_1_dp"
+            android:layout_height="@dimen/dimens_40_dp"
+            android:visibility="invisible"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintEnd_toStartOf="@id/searchImageView"
+            motion:layout_constraintTop_toTopOf="parent" />
+        <Constraint
+            android:id="@+id/searchEditText"
+            android:layout_width="@dimen/dimens_1_dp"
+            android:layout_height="@dimen/dimens_40_dp"
+            android:visibility="invisible"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintEnd_toStartOf="@id/searchImageView"
+            motion:layout_constraintTop_toTopOf="parent" />
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/searchBarMotionEnd">
+
+        <Constraint
+            android:id="@+id/searchEditText"
+            android:layout_width="@dimen/dimens_180_dp"
+            android:layout_height="@dimen/dimens_40_dp"
+            android:visibility="visible"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintEnd_toStartOf="@id/searchImageView"
+            motion:layout_constraintTop_toTopOf="parent" />
+    </ConstraintSet>
+</MotionScene>
