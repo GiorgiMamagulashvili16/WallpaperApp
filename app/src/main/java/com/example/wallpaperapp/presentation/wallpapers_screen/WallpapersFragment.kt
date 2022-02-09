@@ -35,10 +35,9 @@ class WallpapersFragment : BaseFragment<WallpapersFragmentBinding, WallpapersVie
         observeWallpapers(viewModel)
         initRecyclerView(viewModel)
         viewModel.getWallpapers()
-        setMenuIconChangeListener()
-        setMotionTransitions(viewModel)
         observeCategories(viewModel)
         configureSearch(viewModel)
+        viewModel.setCategories()
     }
 
     private fun configureSearch(viewModel: WallpapersViewModel){
@@ -73,35 +72,6 @@ class WallpapersFragment : BaseFragment<WallpapersFragmentBinding, WallpapersVie
         }
     }
 
-    private fun setMotionTransitions(viewModel: WallpapersViewModel) {
-        with(binding)
-        {
-            searchImageView.setOnClickListener {
-                with(motionLayout) {
-                    setTransition(R.id.searchBarMotion)
-                    transitionToEnd()
-                    if (currentState == R.id.searchBarMotionStart) {
-                        transitionToEnd()
-                    } else {
-                        transitionToStart()
-                    }
-                }
-            }
-            menuImageView.setOnClickListener {
-                with(motionLayout) {
-                    viewModel.setCategories()
-                    setTransition(R.id.menuMotion)
-                    transitionToEnd()
-                    if (currentState == R.id.menuMotionStart)
-                        transitionToEnd()
-                    else {
-                        transitionToStart()
-                    }
-                }
-            }
-        }
-    }
-
     private fun observeCategories(viewModel: WallpapersViewModel) {
         flowObserver(viewModel.categoryFlow) {
             categoriesAdapter.submitList(it)
@@ -118,22 +88,7 @@ class WallpapersFragment : BaseFragment<WallpapersFragmentBinding, WallpapersVie
             }
             addOnScrollListener(scrollListener)
         }
-    }
-
-    private fun setMenuIconChangeListener() {
-        with(binding) {
-            searchBarContainer.setActionOnSpecifiedProgress(0.4f, {
-                searchImageView.setDrawableImage(
-                    requireContext(),
-                    R.drawable.ic_find_icon
-                )
-            }) {
-                searchImageView.setDrawableImage(
-                    requireContext(),
-                    R.drawable.ic_close
-                )
-            }
-        }
+        initCategoriesRecycler()
     }
 
     private fun initCategoriesRecycler() {
