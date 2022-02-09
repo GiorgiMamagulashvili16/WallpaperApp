@@ -14,12 +14,12 @@ import com.example.wallpaperapp.domain.repository.ImagesRepository
 import com.example.wallpaperapp.domain.repository.SavedWallpaperRepository
 import com.example.wallpaperapp.presentation.detail_screen.DetailFragment
 import com.example.wallpaperapp.presentation.detail_screen.DetailViewModel
+import com.example.wallpaperapp.presentation.detail_screen.provideWallpaperInstance
 import com.example.wallpaperapp.presentation.wallpapers_screen.WallpapersFragment
 import com.example.wallpaperapp.presentation.wallpapers_screen.WallpapersViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
-import kotlin.math.sin
 
 val networkModule = module {
     single { AuthorizationInterceptor() }
@@ -41,7 +41,8 @@ val wallpapersScreenModule = module {
 val detailsScreenModule = module {
     scope<DetailFragment> {
         factory<SavedWallpaperRepository> { SavedWallpaperRepositoryImpl(get(), get(), get()) }
-        viewModel { DetailViewModel(get()) }
+        viewModel { DetailViewModel(get(),get()) }
+        factory { provideWallpaperInstance(androidContext()) }
     }
 }
 val mapperModule = module {

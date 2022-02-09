@@ -12,7 +12,7 @@ import com.example.wallpaperapp.domain.repository.SavedWallpaperRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class DetailViewModel(private val savedWallpaperRepository: SavedWallpaperRepository) :
+class DetailViewModel(private val savedWallpaperRepository: SavedWallpaperRepository,private val wallpaperManager: WallpaperManager) :
     ViewModel() {
 
     fun saveWallpaper(wallpaper: Photo) {
@@ -22,13 +22,11 @@ class DetailViewModel(private val savedWallpaperRepository: SavedWallpaperReposi
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
-    fun setImageAtLockScreen(bitmap: Bitmap, context: Context) {
-        val wallpapersFragment = WallpaperManager.getInstance(context)
-        wallpapersFragment.setBitmap(bitmap, null, true, WallpaperManager.FLAG_LOCK)
+    fun setImageAtLockScreen(bitmap: Bitmap) {
+        wallpaperManager.setBitmap(bitmap, null, true, WallpaperManager.FLAG_LOCK)
     }
-
-    fun setImageAtHomeScreen(bitmap: Bitmap, context: Context) {
-        val wallpapersFragment = WallpaperManager.getInstance(context)
-        wallpapersFragment.setBitmap(bitmap)
+    @RequiresApi(Build.VERSION_CODES.N)
+    fun setImageAtHomeScreen(bitmap: Bitmap,) {
+        wallpaperManager.setBitmap(bitmap)
     }
 }

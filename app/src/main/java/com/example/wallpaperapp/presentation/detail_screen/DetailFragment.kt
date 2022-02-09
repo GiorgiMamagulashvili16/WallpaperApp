@@ -1,12 +1,19 @@
 package com.example.wallpaperapp.presentation.detail_screen
 
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.example.wallpaperapp.databinding.DetailFragmentBinding
+import com.example.wallpaperapp.domain.util.extensions.getAsBitmap
+import com.example.wallpaperapp.domain.util.extensions.launchLifecycle
 import com.example.wallpaperapp.domain.util.extensions.loadImage
 import com.example.wallpaperapp.presentation.base.BaseFragment
 import com.example.wallpaperapp.presentation.base.Inflate
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlin.reflect.KClass
-
+@RequiresApi(Build.VERSION_CODES.N)
 class DetailFragment : BaseFragment<DetailFragmentBinding, DetailViewModel>() {
     override val viewModelClass: KClass<DetailViewModel>
         get() = DetailViewModel::class
@@ -34,10 +41,18 @@ class DetailFragment : BaseFragment<DetailFragmentBinding, DetailViewModel>() {
                 vM.saveWallpaper(args.wallpaper)
             }
             lockScreenButton.setOnClickListener {
-
+                launchLifecycle {
+                    vM.setImageAtLockScreen(
+                        args.wallpaper.src.portrait.getAsBitmap(requireContext(), 900, 1200)
+                    )
+                }
             }
             homeButton.setOnClickListener {
-
+                launchLifecycle {
+                    vM.setImageAtHomeScreen(
+                        args.wallpaper.src.portrait.getAsBitmap(requireContext(), 900, 1200)
+                    )
+                }
             }
         }
     }
