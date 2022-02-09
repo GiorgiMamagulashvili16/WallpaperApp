@@ -1,9 +1,11 @@
 package com.example.wallpaperapp.presentation.wallpapers_screen
 
+import android.view.View
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager2.widget.CompositePageTransformer
+import androidx.viewpager2.widget.MarginPageTransformer
 import com.example.wallpaperapp.R
 import com.example.wallpaperapp.databinding.WallpapersFragmentBinding
 import com.example.wallpaperapp.domain.util.extensions.flowObserver
@@ -14,6 +16,7 @@ import com.example.wallpaperapp.presentation.wallpapers_screen.adapters.Wallpape
 import com.example.wallpaperapp.presentation.wallpapers_screen.adapters.listeners.WallpapersAdapterScrollListener
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlin.math.abs
 import kotlin.reflect.KClass
 
 class WallpapersFragment : BaseFragment<WallpapersFragmentBinding, WallpapersViewModel>() {
@@ -106,9 +109,21 @@ class WallpapersFragment : BaseFragment<WallpapersFragmentBinding, WallpapersVie
 
     private fun initCategoriesRecycler() {
         with(binding.categoryRecyclerView) {
-            layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            clipToPadding = false
+            clipChildren = false
+            offscreenPageLimit = 3
+            getChildAt(0)
+            overScrollMode = View.OVER_SCROLL_NEVER
             adapter = categoriesAdapter
         }
+        val transformer = CompositePageTransformer()
+        with(transformer) {
+            addTransformer(MarginPageTransformer(8))
+            addTransformer { view: View, fl: Float ->
+                val v = 1 - abs(fl)
+                view.scaleY = 0.9f + v * 0.2f
+            }
+        }
+        binding.categoryRecyclerView.setPageTransformer(transformer)
     }
 }
