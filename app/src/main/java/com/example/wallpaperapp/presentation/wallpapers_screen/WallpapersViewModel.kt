@@ -16,6 +16,7 @@ class WallpapersViewModel(
     private val getWallPapersUseCase: GetWallPapersUseCase
     ) : ViewModel() {
     private var page = 1
+    private var currentTopic = "home"
 
     private val wallpapersScreenStateFlow =
         MutableStateFlow<WallpapersScreenStates>(WallpapersScreenStates.Idle)
@@ -27,9 +28,15 @@ class WallpapersViewModel(
     private val categoriesStateFlow = MutableStateFlow<List<Category>>(emptyList())
     val categoryFlow: StateFlow<List<Category>> = categoriesStateFlow.asStateFlow()
 
-    fun getWallpapers() = viewModelScope.launch(Dispatchers.IO) {
+    fun getSearchedWallPapers(text: CharSequence){
+        currentWallpapers.clear()
+        currentTopic = text.toString()
+        getWallpapers(text.toString())
+    }
+
+    fun getWallpapers(text: String = currentTopic) = viewModelScope.launch(Dispatchers.IO) {
         wallpapersScreenStateFlow.value = WallpapersScreenStates.Loading
-        when (val response = getWallPapersUseCase.getWallPapers("i", page)) {
+        when (val response = getWallPapersUseCase.getWallPapers(text, page)) {
             is Resource.Success -> {
                 currentWallpapers.addAll(response.data)
                 wallpapersScreenStateFlow.emit(WallpapersScreenStates.Success(currentWallpapers.toList()))

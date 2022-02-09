@@ -17,4 +17,6 @@
     <dimen name="dimens_80_dp">80dp</dimen>
     <dimen name="dimens_200_dp">200dp</dimen>
     <dimen name="dimens_21_sp">21sp</dimen>
+    <dimen name="dimens_180_dp">180dp</dimen>
+    <dimen name="dimens_1_dp">1dp</dimen>
 </resources>

@@ -8,6 +8,8 @@ import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import com.example.wallpaperapp.R
 import com.example.wallpaperapp.databinding.WallpapersFragmentBinding
+import com.example.wallpaperapp.domain.util.extensions.setActionOnSpecifiedProgress
+import com.example.wallpaperapp.domain.util.extensions.setDrawableImage
 import com.example.wallpaperapp.domain.util.extensions.flowObserver
 import com.example.wallpaperapp.presentation.base.BaseFragment
 import com.example.wallpaperapp.presentation.base.Inflate
@@ -33,8 +35,19 @@ class WallpapersFragment : BaseFragment<WallpapersFragmentBinding, WallpapersVie
         observeWallpapers(viewModel)
         initRecyclerView(viewModel)
         viewModel.getWallpapers()
-        setMotionTransitions(viewModel)
         observeCategories(viewModel)
+        configureSearch(viewModel)
+        viewModel.setCategories()
+    }
+
+    private fun configureSearch(viewModel: WallpapersViewModel){
+        with(binding.searchEditText){
+            val watcher = SearchTextWatcher{
+                viewModel.getSearchedWallPapers(it)
+                setText("")
+            }
+            addTextChangedListener(watcher)
+        }
     }
 
 
@@ -59,35 +72,6 @@ class WallpapersFragment : BaseFragment<WallpapersFragmentBinding, WallpapersVie
         }
     }
 
-    private fun setMotionTransitions(viewModel: WallpapersViewModel) {
-        with(binding)
-        {
-            searchImageView.setOnClickListener {
-                with(motionLayout) {
-                    setTransition(R.id.searchBarMotion)
-                    transitionToEnd()
-                    if (currentState == R.id.searchBarMotionStart) {
-                        transitionToEnd()
-                    } else {
-                        transitionToStart()
-                    }
-                }
-            }
-            menuImageView.setOnClickListener {
-                with(motionLayout) {
-                    viewModel.setCategories()
-                    setTransition(R.id.menuMotion)
-                    transitionToEnd()
-                    if (currentState == R.id.menuMotionStart)
-                        transitionToEnd()
-                    else {
-                        transitionToStart()
-                    }
-                }
-            }
-        }
-    }
-
     private fun observeCategories(viewModel: WallpapersViewModel) {
         flowObserver(viewModel.categoryFlow) {
             categoriesAdapter.submitList(it)
@@ -103,8 +87,8 @@ class WallpapersFragment : BaseFragment<WallpapersFragmentBinding, WallpapersVie
                 viewModel.getWallpapers()
             }
             addOnScrollListener(scrollListener)
-            initCategoriesRecycler()
         }
+        initCategoriesRecycler()
     }
 
     private fun initCategoriesRecycler() {
