@@ -6,10 +6,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
-import com.example.wallpaperapp.R
 import com.example.wallpaperapp.databinding.WallpapersFragmentBinding
-import com.example.wallpaperapp.domain.util.extensions.setActionOnSpecifiedProgress
-import com.example.wallpaperapp.domain.util.extensions.setDrawableImage
 import com.example.wallpaperapp.domain.util.extensions.flowObserver
 import com.example.wallpaperapp.presentation.base.BaseFragment
 import com.example.wallpaperapp.presentation.base.Inflate
@@ -40,9 +37,9 @@ class WallpapersFragment : BaseFragment<WallpapersFragmentBinding, WallpapersVie
         viewModel.setCategories()
     }
 
-    private fun configureSearch(viewModel: WallpapersViewModel){
-        with(binding.searchEditText){
-            val watcher = SearchTextWatcher{
+    private fun configureSearch(viewModel: WallpapersViewModel) {
+        with(binding.searchEditText) {
+            val watcher = SearchTextWatcher {
                 viewModel.getSearchedWallPapers(it)
                 setText("")
             }
@@ -83,9 +80,9 @@ class WallpapersFragment : BaseFragment<WallpapersFragmentBinding, WallpapersVie
             layoutManager = GridLayoutManager(requireContext(), 2)
             adapter = wallpapersAdapter
             val manager = layoutManager as GridLayoutManager
-            val scrollListener = WallpapersAdapterScrollListener(manager) {
+            val scrollListener = WallpapersAdapterScrollListener({
                 viewModel.getWallpapers()
-            }
+            }, pageSize = 20, manager)
             addOnScrollListener(scrollListener)
         }
         initCategoriesRecycler()
