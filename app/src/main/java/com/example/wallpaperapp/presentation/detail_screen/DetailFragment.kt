@@ -18,12 +18,27 @@ class DetailFragment : BaseFragment<DetailFragmentBinding, DetailViewModel>() {
 
     override fun onBindViewModel(viewModel: DetailViewModel) {
         setInfo()
+        setButtonClickListeners(viewModel)
     }
 
     private fun setInfo() {
         with(binding) {
             wallpaperDetailImageView.loadImage(args.wallpaper.src.portrait)
             wallpaperDetailTitleTextView.text = args.wallpaper.alt
+        }
+    }
+
+    private fun setButtonClickListeners(vM: DetailViewModel) {
+        with(binding) {
+            favoritesButton.setOnClickListener {
+                vM.saveWallpaper(args.wallpaper)
+            }
+            lockScreenButton.setOnClickListener {
+
+            }
+            homeButton.setOnClickListener {
+
+            }
         }
     }
 }

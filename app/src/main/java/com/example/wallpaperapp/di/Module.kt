@@ -2,10 +2,7 @@ package com.example.wallpaperapp.di
 
 import com.example.wallpaperapp.data.db.provideRoomInstance
 import com.example.wallpaperapp.data.db.provideWallpaperDao
-import com.example.wallpaperapp.data.mappers.PhotoDomainMapper
-import com.example.wallpaperapp.data.mappers.PhotoDtoMapper
-import com.example.wallpaperapp.data.mappers.PhotoEntityMapper
-import com.example.wallpaperapp.data.mappers.SrcDtoMapper
+import com.example.wallpaperapp.data.mappers.*
 import com.example.wallpaperapp.data.network.api.provideHttpClient
 import com.example.wallpaperapp.data.network.api.provideImageApi
 import com.example.wallpaperapp.data.network.api.provideRetrofit
@@ -44,11 +41,13 @@ val wallpapersScreenModule = module {
 val detailsScreenModule = module {
     scope<DetailFragment> {
         factory<SavedWallpaperRepository> { SavedWallpaperRepositoryImpl(get(), get(), get()) }
-        viewModel { DetailViewModel() }
+        viewModel { DetailViewModel(get()) }
     }
 }
 val mapperModule = module {
     single { SrcDtoMapper() }
+    single { SrcEntityMapper() }
+    single { SrcDomainMapper() }
     single { PhotoDtoMapper(get()) }
     single { PhotoEntityMapper(get()) }
     single { PhotoDomainMapper(get()) }

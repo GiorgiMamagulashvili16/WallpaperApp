@@ -12,15 +12,15 @@ class SavedWallpaperRepositoryImpl(
     private val photoDomainMapper: PhotoDomainMapper
 ) :
     SavedWallpaperRepository {
-    override fun saveWallpaper(wallpaper: Photo) {
+    override suspend fun saveWallpaper(wallpaper: Photo) {
         wallpapersDao.saveWallpaper(photoDomainMapper.mapModel(wallpaper))
     }
 
-    override fun unSaveWallpaper(id:Int) {
+    override suspend fun unSaveWallpaper(id: Int) {
         wallpapersDao.unSaveWallpaper(id)
     }
 
-    override fun getSavedWallpapers(): List<Photo> {
-       return photoEntityMapper.mapToList(wallpapersDao.getSavedWallpapers())
+    override suspend fun getSavedWallpapers(): List<Photo> {
+        return photoEntityMapper.mapToList(wallpapersDao.getSavedWallpapers())
     }
 }

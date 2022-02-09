@@ -4,10 +4,10 @@ import com.example.wallpaperapp.domain.models.Photo
 
 interface SavedWallpaperRepository {
 
-    fun saveWallpaper(wallpaper:Photo)
+    suspend fun saveWallpaper(wallpaper: Photo)
 
-    fun unSaveWallpaper(id:Int)
+    suspend fun unSaveWallpaper(id: Int)
 
-    fun getSavedWallpapers(): List<Photo>
+    suspend fun getSavedWallpapers(): List<Photo>
 
 }
