@@ -3,6 +3,7 @@ package com.example.wallpaperapp.presentation.wallpapers_screen
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.wallpaperapp.R
 import com.example.wallpaperapp.databinding.WallpapersFragmentBinding
 import com.example.wallpaperapp.presentation.base.BaseFragment
 import com.example.wallpaperapp.presentation.base.Inflate
@@ -25,6 +26,7 @@ class WallpapersFragment : BaseFragment<WallpapersFragmentBinding, WallpapersVie
         observeWallpapers(viewModel)
         initRecyclerView(viewModel)
         viewModel.getWallpapers()
+        setMotionTransitions(viewModel)
     }
 
 
@@ -48,6 +50,35 @@ class WallpapersFragment : BaseFragment<WallpapersFragmentBinding, WallpapersVie
             }
         }
     }
+    private fun setMotionTransitions(viewModel: WallpapersViewModel) {
+        with(binding)
+        {
+            searchImageView.setOnClickListener {
+                with(motionLayout) {
+                    setTransition(R.id.searchBarMotion)
+                    transitionToEnd()
+                    if (currentState == R.id.searchBarMotionStart) {
+                        transitionToEnd()
+                    } else {
+                        transitionToStart()
+                    }
+                }
+            }
+            menuImageView.setOnClickListener {
+                with(motionLayout) {
+                    setTransition(R.id.menuMotion)
+                    transitionToEnd()
+                    if (currentState == R.id.menuMotionStart)
+                        transitionToEnd()
+                    else{
+                        transitionToStart()
+                    }
+
+                }
+            }
+        }
+    }
+
 
     private fun initRecyclerView(viewModel: WallpapersViewModel) {
         with(binding.imagesRecyclerView) {

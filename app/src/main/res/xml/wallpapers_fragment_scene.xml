@@ -6,7 +6,6 @@
         motion:constraintSetEnd="@+id/searchBarMotionEnd"
         motion:constraintSetStart="@id/searchBarMotionStart"
         motion:duration="600">
-
     </Transition>
     <Transition
         android:id="@+id/menuMotion"
@@ -14,7 +13,6 @@
         motion:constraintSetStart="@id/menuMotionStart"
         motion:duration="600">
 
-        <KeyFrameSet></KeyFrameSet>
     </Transition>
 
     <ConstraintSet android:id="@+id/menuMotionStart"></ConstraintSet>

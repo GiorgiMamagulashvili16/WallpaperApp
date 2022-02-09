@@ -38,4 +38,5 @@ class WallpapersViewModel(private val imagesRepository: ImagesRepository) : View
     fun resetStateFlow(){
         wallpapersScreenStateFlow.value = WallpapersScreenStates.Idle
     }
+
 }
