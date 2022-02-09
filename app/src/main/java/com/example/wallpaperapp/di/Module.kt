@@ -9,6 +9,8 @@ import com.example.wallpaperapp.data.network.interceptors.AuthorizationIntercept
 import com.example.wallpaperapp.data.network.interceptors.NetworkConnectionInterceptor
 import com.example.wallpaperapp.data.repository.ImageRepositoryImpl
 import com.example.wallpaperapp.domain.repository.ImagesRepository
+import com.example.wallpaperapp.domain.usecase.GetWallPapersUseCase
+import com.example.wallpaperapp.domain.usecase.GetWallPapersUseCaseImpl
 import com.example.wallpaperapp.presentation.wallpapers_screen.WallpapersFragment
 import com.example.wallpaperapp.presentation.wallpapers_screen.WallpapersViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -24,6 +26,7 @@ val wallpapersScreenModule = module {
     scope<WallpapersFragment> {
         factory { provideImageApi(get()) }
         factory<ImagesRepository> { ImageRepositoryImpl(get(), get()) }
+        factory<GetWallPapersUseCase> { GetWallPapersUseCaseImpl(get()) }
         viewModel { WallpapersViewModel(get()) }
     }
 }

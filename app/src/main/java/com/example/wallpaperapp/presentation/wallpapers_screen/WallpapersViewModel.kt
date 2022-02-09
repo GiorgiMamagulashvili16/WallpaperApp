@@ -3,7 +3,7 @@ package com.example.wallpaperapp.presentation.wallpapers_screen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wallpaperapp.domain.models.Photo
-import com.example.wallpaperapp.domain.repository.ImagesRepository
+import com.example.wallpaperapp.domain.usecase.GetWallPapersUseCase
 import com.example.wallpaperapp.domain.util.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,7 +11,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class WallpapersViewModel(private val imagesRepository: ImagesRepository) : ViewModel() {
+class WallpapersViewModel(
+    private val getWallPapersUseCase: GetWallPapersUseCase
+    ) : ViewModel() {
     private var page = 1
 
     private val wallpapersScreenStateFlow =
@@ -23,7 +25,7 @@ class WallpapersViewModel(private val imagesRepository: ImagesRepository) : View
 
     fun getWallpapers() = viewModelScope.launch(Dispatchers.IO) {
         wallpapersScreenStateFlow.value = WallpapersScreenStates.Loading
-        when (val response = imagesRepository.getImages("jdm", page)) {
+        when (val response = getWallPapersUseCase.getWallPapers("i", page)) {
             is Resource.Success -> {
                 currentWallpapers.addAll(response.data)
                 wallpapersScreenStateFlow.emit(WallpapersScreenStates.Success(currentWallpapers.toList()))
