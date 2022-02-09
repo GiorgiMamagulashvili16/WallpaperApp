@@ -1,10 +1,11 @@
 package com.example.wallpaperapp.domain.models
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Photo(
     val id: Int,
     val alt: String,
-    val height: Int,
-    val width: Int,
     val src: Src,
-    val url: String,
-)
+):Parcelable

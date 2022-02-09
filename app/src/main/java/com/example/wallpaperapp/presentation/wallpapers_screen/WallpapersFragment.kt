@@ -1,6 +1,7 @@
 package com.example.wallpaperapp.presentation.wallpapers_screen
 
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.wallpaperapp.databinding.WallpapersFragmentBinding
 import com.example.wallpaperapp.presentation.base.BaseFragment
@@ -21,6 +22,7 @@ class WallpapersFragment : BaseFragment<WallpapersFragmentBinding, WallpapersVie
     private val wallpapersAdapter by lazy { WallpapersAdapter() }
     override fun onBindViewModel(viewModel: WallpapersViewModel) {
         observeWallpapers(viewModel)
+        recyclerViewListeners()
     }
 
 
@@ -49,6 +51,16 @@ class WallpapersFragment : BaseFragment<WallpapersFragmentBinding, WallpapersVie
         with(binding.imagesRecyclerView) {
             layoutManager = GridLayoutManager(requireContext(), 2)
             adapter = wallpapersAdapter
+        }
+    }
+
+    private fun recyclerViewListeners() {
+        wallpapersAdapter.onItemClick = { wallpaper ->
+            findNavController().navigate(
+                WallpapersFragmentDirections.actionWallpapersFragmentToDetailFragment(
+                    wallpaper
+                )
+            )
         }
     }
 }
