@@ -2,6 +2,7 @@ package com.example.wallpaperapp.presentation.wallpapers_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.wallpaperapp.domain.models.Category
 import com.example.wallpaperapp.domain.models.Photo
 import com.example.wallpaperapp.domain.usecase.GetWallPapersUseCase
 import com.example.wallpaperapp.domain.util.Resource
@@ -23,6 +24,9 @@ class WallpapersViewModel(
 
     private val currentWallpapers = mutableListOf<Photo>()
 
+    private val categoriesStateFlow = MutableStateFlow<List<Category>>(emptyList())
+    val categoryFlow: StateFlow<List<Category>> = categoriesStateFlow.asStateFlow()
+
     fun getWallpapers() = viewModelScope.launch(Dispatchers.IO) {
         wallpapersScreenStateFlow.value = WallpapersScreenStates.Loading
         when (val response = getWallPapersUseCase.getWallPapers("i", page)) {
@@ -37,8 +41,15 @@ class WallpapersViewModel(
         }
     }
 
-    fun resetStateFlow(){
+    fun resetStateFlow() {
         wallpapersScreenStateFlow.value = WallpapersScreenStates.Idle
     }
 
+    fun setCategories() = viewModelScope.launch(Dispatchers.IO) {
+        val categoryList = mutableListOf<Category>()
+        CategoriesEnum.values().forEach {
+            categoryList.add(it.category)
+        }
+        categoriesStateFlow.emit(categoryList)
+    }
 }

@@ -10,4 +10,6 @@
     <color name="background_black">#282737</color>
     <color name="purple">#ea80fc</color>
     <color name="light_gray">#5E5E5E</color>
+    <color name="blurry_black">#8F000000</color>
+    <color name="blurry_white">#A6FFFFFF</color>
 </resources>
