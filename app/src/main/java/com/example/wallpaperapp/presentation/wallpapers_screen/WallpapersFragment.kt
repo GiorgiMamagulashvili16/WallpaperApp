@@ -30,8 +30,11 @@ class WallpapersFragment : BaseFragment<WallpapersFragmentBinding, WallpapersVie
     }
 
     private val wallpapersAdapter by lazy { WallpapersAdapter() }
-    private val categoriesAdapter by lazy { CategoryAdapter() }
+    private lateinit var categoryAdapter: CategoryAdapter
     override fun onBindViewModel(viewModel: WallpapersViewModel) {
+        categoryAdapter = CategoryAdapter {
+            viewModel.getSearchedWallPapers(it)
+        }
         observeWallpapers(viewModel)
         initRecyclerView(viewModel)
         viewModel.getWallpapers()
@@ -74,7 +77,7 @@ class WallpapersFragment : BaseFragment<WallpapersFragmentBinding, WallpapersVie
 
     private fun observeCategories(viewModel: WallpapersViewModel) {
         flowObserver(viewModel.categoryFlow) {
-            categoriesAdapter.submitList(it)
+            categoryAdapter.submitList(it)
         }
     }
 
@@ -98,7 +101,7 @@ class WallpapersFragment : BaseFragment<WallpapersFragmentBinding, WallpapersVie
             offscreenPageLimit = 3
             getChildAt(0)
             overScrollMode = View.OVER_SCROLL_NEVER
-            adapter = categoriesAdapter
+            adapter = categoryAdapter
         }
         val transformer = CompositePageTransformer()
         with(transformer) {

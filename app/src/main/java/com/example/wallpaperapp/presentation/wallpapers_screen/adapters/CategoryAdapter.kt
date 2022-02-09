@@ -1,6 +1,5 @@
 package com.example.wallpaperapp.presentation.wallpapers_screen.adapters
 
-import android.util.Log.d
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
@@ -10,7 +9,7 @@ import com.example.wallpaperapp.domain.models.Category
 import com.example.wallpaperapp.domain.util.ItemDiffUtil
 import com.example.wallpaperapp.domain.util.extensions.loadImage
 
-class CategoryAdapter :
+class CategoryAdapter(private val onClick: (String) -> Unit) :
     ListAdapter<Category, CategoryAdapter.CategoryVH>(ItemDiffUtil<Category>()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryVH {
@@ -24,15 +23,19 @@ class CategoryAdapter :
     }
 
     override fun onBindViewHolder(holder: CategoryVH, position: Int) {
-        holder.onBind(getItem(position))
+        holder.onBind(getItem(position), onClick)
     }
 
     class CategoryVH(private val binding: CategoryItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun onBind(category: Category) {
+        fun onBind(category: Category, onClick: (String) -> Unit) {
             with(binding) {
                 backgroundImageView.loadImage(category.backgroundImageUrl)
                 categoryTextView.text = category.categoryName
+
+                root.setOnClickListener {
+                    onClick(category.categoryName)
+                }
             }
         }
     }
