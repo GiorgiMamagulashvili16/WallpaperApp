@@ -13,6 +13,40 @@
         android:layout_height="match_parent"
         app:layoutDescription="@xml/wallpapers_fragment_scene">
 
+        <androidx.constraintlayout.motion.widget.MotionLayout
+            android:id="@+id/searchBarContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layoutDescription="@xml/wallpapers_fragment_xml_searchbarcontainer_scene"
+            app:layout_constraintEnd_toStartOf="@id/menuImageView"
+            app:layout_constraintStart_toEndOf="@id/wallpaperTxtTextView">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/searchImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dimens_20_dp"
+                android:src="@drawable/ic_find_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/searchEditText"
+                android:layout_width="@dimen/dimens_0_dp"
+                android:layout_height="@dimen/dimens_40_dp"
+                android:layout_marginHorizontal="@dimen/dimens_5_dp"
+                android:backgroundTint="@color/white"
+                android:maxLines="1"
+                android:paddingHorizontal="@dimen/dimens_5_dp"
+                android:textColor="@color/white"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/searchImageView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.motion.widget.MotionLayout>
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/wallpaperTxtTextView"
             android:layout_width="wrap_content"
@@ -41,41 +75,43 @@
             android:layout_height="@dimen/dimens_0_dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/categoryRecyclerView"
-            tools:layout_editor_absoluteX="0dp"
             tools:listitem="@layout/wallpaper_image_item" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/searchImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dimens_20_dp"
-            android:src="@drawable/ic_find_icon"
-            app:layout_constraintBottom_toBottomOf="@+id/wallpaperTxtTextView"
-            app:layout_constraintEnd_toStartOf="@+id/menuImageView"
-            app:layout_constraintTop_toTopOf="@+id/wallpaperTxtTextView" />
+        <!--        <androidx.appcompat.widget.AppCompatImageView-->
+        <!--            android:id="@+id/searchImageView"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginEnd="@dimen/dimens_20_dp"-->
+        <!--            android:src="@drawable/ic_find_icon"-->
+        <!--            app:layout_constraintBottom_toBottomOf="@+id/wallpaperTxtTextView"-->
+        <!--            app:layout_constraintEnd_toStartOf="@+id/menuImageView"-->
+        <!--            app:layout_constraintTop_toTopOf="@+id/wallpaperTxtTextView" />-->
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/menuImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/dimens_20_dp"
+            android:scaleType="centerCrop"
             android:src="@drawable/ic_arrow_down"
             app:layout_constraintBottom_toBottomOf="@+id/wallpaperTxtTextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/wallpaperTxtTextView" />
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/searchEditText"
-            android:layout_width="@dimen/dimens_0_dp"
-            android:layout_height="@dimen/dimens_40_dp"
-            android:layout_marginHorizontal="@dimen/dimens_5_dp"
-            android:backgroundTint="@color/white"
-            android:maxLines="1"
-            android:paddingHorizontal="@dimen/dimens_5_dp"
-            android:textColor="@color/white"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toStartOf="@id/searchImageView"
-            app:layout_constraintStart_toEndOf="@id/wallpaperTxtTextView" />
+        <!--        <androidx.appcompat.widget.AppCompatEditText-->
+        <!--            android:id="@+id/searchEditText"-->
+        <!--            android:layout_width="@dimen/dimens_0_dp"-->
+        <!--            android:layout_height="@dimen/dimens_40_dp"-->
+        <!--            android:layout_marginHorizontal="@dimen/dimens_5_dp"-->
+        <!--            android:backgroundTint="@color/white"-->
+        <!--            android:maxLines="1"-->
+        <!--            android:paddingHorizontal="@dimen/dimens_5_dp"-->
+        <!--            android:textColor="@color/white"-->
+        <!--            android:visibility="invisible"-->
+        <!--            app:layout_constraintEnd_toStartOf="@id/searchImageView"-->
+        <!--            app:layout_constraintStart_toEndOf="@id/wallpaperTxtTextView" />-->
+
+
     </androidx.constraintlayout.motion.widget.MotionLayout>
 
     <ProgressBar

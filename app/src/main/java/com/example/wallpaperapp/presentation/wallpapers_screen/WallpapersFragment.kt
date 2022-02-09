@@ -5,6 +5,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.wallpaperapp.R
 import com.example.wallpaperapp.databinding.WallpapersFragmentBinding
+import com.example.wallpaperapp.domain.util.extensions.setActionOnSpecifiedProgress
+import com.example.wallpaperapp.domain.util.extensions.setDrawableImage
 import com.example.wallpaperapp.presentation.base.BaseFragment
 import com.example.wallpaperapp.presentation.base.Inflate
 import com.example.wallpaperapp.presentation.wallpapers_screen.adapters.WallpapersAdapter
@@ -26,7 +28,7 @@ class WallpapersFragment : BaseFragment<WallpapersFragmentBinding, WallpapersVie
         observeWallpapers(viewModel)
         initRecyclerView(viewModel)
         viewModel.getWallpapers()
-        setMotionTransitions(viewModel)
+        setMenuIconChangeListener()
     }
 
 
@@ -50,45 +52,31 @@ class WallpapersFragment : BaseFragment<WallpapersFragmentBinding, WallpapersVie
             }
         }
     }
-    private fun setMotionTransitions(viewModel: WallpapersViewModel) {
-        with(binding)
-        {
-            searchImageView.setOnClickListener {
-                with(motionLayout) {
-                    setTransition(R.id.searchBarMotion)
-                    transitionToEnd()
-                    if (currentState == R.id.searchBarMotionStart) {
-                        transitionToEnd()
-                    } else {
-                        transitionToStart()
-                    }
-                }
-            }
-            menuImageView.setOnClickListener {
-                with(motionLayout) {
-                    setTransition(R.id.menuMotion)
-                    transitionToEnd()
-                    if (currentState == R.id.menuMotionStart)
-                        transitionToEnd()
-                    else{
-                        transitionToStart()
-                    }
-
-                }
-            }
-        }
-    }
-
-
     private fun initRecyclerView(viewModel: WallpapersViewModel) {
         with(binding.imagesRecyclerView) {
             layoutManager = GridLayoutManager(requireContext(), 2)
             adapter = wallpapersAdapter
             val manager = layoutManager as GridLayoutManager
-            val scrollListener = WallpapersAdapterScrollListener(manager){
+            val scrollListener = WallpapersAdapterScrollListener(manager) {
                 viewModel.getWallpapers()
             }
             addOnScrollListener(scrollListener)
+        }
+    }
+
+    private fun setMenuIconChangeListener() {
+        with(binding) {
+            searchBarContainer.setActionOnSpecifiedProgress(0.4f, {
+                searchImageView.setDrawableImage(
+                    requireContext(),
+                    R.drawable.ic_find_icon
+                )
+            }) {
+                searchImageView.setDrawableImage(
+                    requireContext(),
+                    R.drawable.ic_close
+                )
+            }
         }
     }
 }

@@ -3,10 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Giorgi.mamagulashvil/AndroidStudioProjects/WallpaperApp/app/src/main/res/drawable/ic_arrow_down.xml" value="0.2703125" />
+        <entry key="..\:/Users/Giorgi.mamagulashvil/AndroidStudioProjects/WallpaperApp/app/src/main/res/drawable/ic_close.xml" value="0.2703125" />
+        <entry key="..\:/Users/Giorgi.mamagulashvil/AndroidStudioProjects/WallpaperApp/app/src/main/res/drawable/ic_find_icon.xml" value="0.2703125" />
         <entry key="..\:/Users/Giorgi.mamagulashvil/AndroidStudioProjects/WallpaperApp/app/src/main/res/layout/activity_main.xml" value="0.24635416666666668" />
         <entry key="..\:/Users/Giorgi.mamagulashvil/AndroidStudioProjects/WallpaperApp/app/src/main/res/layout/category_item.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Giorgi.mamagulashvil/AndroidStudioProjects/WallpaperApp/app/src/main/res/layout/wallpaper_image_item.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/Giorgi.mamagulashvil/AndroidStudioProjects/WallpaperApp/app/src/main/res/layout/wallpapers_fragment.xml" value="0.35260416666666666" />
+        <entry key="..\:/Users/Giorgi.mamagulashvil/AndroidStudioProjects/WallpaperApp/app/src/main/res/layout/wallpapers_fragment.xml" value="0.29210526315789476" />
       </map>
     </option>
   </component>
