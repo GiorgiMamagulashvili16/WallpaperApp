@@ -35,6 +35,17 @@ class WallpapersFragment : BaseFragment<WallpapersFragmentBinding, WallpapersVie
         viewModel.getWallpapers()
         setMotionTransitions(viewModel)
         observeCategories(viewModel)
+        configureSearch(viewModel)
+    }
+
+    private fun configureSearch(viewModel: WallpapersViewModel){
+        with(binding.searchEditText){
+            val watcher = SearchTextWatcher{
+                viewModel.getSearchedWallPapers(it)
+                setText("")
+            }
+            addTextChangedListener(watcher)
+        }
     }
 
 
