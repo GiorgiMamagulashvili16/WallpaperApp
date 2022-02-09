@@ -8,7 +8,7 @@
     tools:context=".presentation.detail_screen.DetailFragment">
 
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/favoritesButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
             tools:text="Title Title Title Title Title Title" />
     </androidx.cardview.widget.CardView>
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/lockScreenButton"
         android:layout_width="35dp"
         android:layout_height="35dp"
@@ -72,7 +72,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/homeButton" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/homeButton"
         android:layout_width="35dp"
         android:layout_height="35dp"
