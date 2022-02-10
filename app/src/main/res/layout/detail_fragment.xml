@@ -6,8 +6,6 @@
     android:layout_height="match_parent"
     android:background="@color/background_black"
     tools:context=".presentation.detail_screen.DetailFragment">
-
-
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/favoritesButton"
         android:layout_width="32dp"
@@ -42,6 +40,17 @@
             android:scaleType="centerCrop"
             tools:src="@tools:sample/avatars" />
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lotieAnim"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center"
+            android:foregroundGravity="center"
+            android:scaleType="centerCrop"
+            app:lottie_autoPlay="false"
+            app:lottie_fileName="success_animation.json"
+            app:lottie_loop="false" />
+
     </androidx.cardview.widget.CardView>
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -69,5 +78,5 @@
         app:layout_constraintEnd_toStartOf="@+id/lockScreenButton"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
-
+    
 </androidx.constraintlayout.widget.ConstraintLayout>

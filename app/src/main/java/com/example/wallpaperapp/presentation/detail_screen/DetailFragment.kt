@@ -12,7 +12,6 @@ import com.example.wallpaperapp.presentation.base.BaseFragment
 import com.example.wallpaperapp.presentation.base.Inflate
 import kotlin.reflect.KClass
 
-@RequiresApi(Build.VERSION_CODES.N)
 class DetailFragment : BaseFragment<DetailFragmentBinding, DetailViewModel>() {
     override val viewModelClass: KClass<DetailViewModel>
         get() = DetailViewModel::class
@@ -26,13 +25,16 @@ class DetailFragment : BaseFragment<DetailFragmentBinding, DetailViewModel>() {
         setInfo()
         setButtonClickListeners(viewModel)
         observeIsSavedWallpaper(viewModel)
-        viewModel.isWallpaperSaved(args.wallpaper.id)
     }
 
     private fun setInfo() {
         with(binding) {
             wallpaperDetailImageView.loadImage(args.wallpaper.src.portrait)
         }
+    }
+
+    private fun playLottieAnimation() {
+        binding.lotieAnim.playAnimation()
     }
 
     private fun setButtonClickListeners(vM: DetailViewModel) {
@@ -42,6 +44,8 @@ class DetailFragment : BaseFragment<DetailFragmentBinding, DetailViewModel>() {
                     vM.removeWallpaper(args.wallpaper.id)
                 else
                     vM.saveWallpaper(args.wallpaper)
+                vM.saveWallpaper(args.wallpaper)
+                playLottieAnimation()
             }
             lockScreenButton.setOnClickListener {
                 launchLifecycle {
@@ -49,6 +53,7 @@ class DetailFragment : BaseFragment<DetailFragmentBinding, DetailViewModel>() {
                         args.wallpaper.src.portrait.getAsBitmap(requireContext(), 800, 1200)
                     )
                 }
+                playLottieAnimation()
             }
             homeButton.setOnClickListener {
                 launchLifecycle {
@@ -56,6 +61,7 @@ class DetailFragment : BaseFragment<DetailFragmentBinding, DetailViewModel>() {
                         args.wallpaper.src.portrait.getAsBitmap(requireContext(), 800, 1200)
                     )
                 }
+                playLottieAnimation()
             }
         }
     }
