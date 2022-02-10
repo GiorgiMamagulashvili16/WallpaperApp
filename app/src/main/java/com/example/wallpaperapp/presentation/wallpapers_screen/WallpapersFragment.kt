@@ -3,6 +3,7 @@ package com.example.wallpaperapp.presentation.wallpapers_screen
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
@@ -38,6 +39,7 @@ class WallpapersFragment : BaseFragment<WallpapersFragmentBinding, WallpapersVie
         observeCategories(viewModel)
         configureSearch(viewModel)
         viewModel.setCategories()
+        recyclerViewListeners()
     }
 
     private fun configureSearch(viewModel: WallpapersViewModel) {
@@ -60,14 +62,12 @@ class WallpapersFragment : BaseFragment<WallpapersFragmentBinding, WallpapersVie
                         binding.wallpaperProgressBar.isVisible = false
                     }
                     is WallpapersScreenStates.Error -> {
-                        binding.wallpaperProgressBar.isVisible = false
                     }
                     is WallpapersScreenStates.Loading -> {
-                        binding.wallpaperProgressBar.isVisible = true
+
                     }
                     else -> Unit
                 }
-                viewModel.resetStateFlow()
             }
         }
     }
@@ -89,6 +89,16 @@ class WallpapersFragment : BaseFragment<WallpapersFragmentBinding, WallpapersVie
             addOnScrollListener(scrollListener)
         }
         initCategoriesRecycler()
+    }
+
+    private fun recyclerViewListeners() {
+        wallpapersAdapter.onItemClick = { wallpaper ->
+            findNavController().navigate(
+                WallpapersFragmentDirections.actionWallpapersFragmentToDetailFragment(
+                    wallpaper
+                )
+            )
+        }
     }
 
     private fun initCategoriesRecycler() {
