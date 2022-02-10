@@ -19,6 +19,7 @@ class FavoritesFragment : BaseFragment<FragmentFavoritesBinding, FavoritesViewMo
     private val favoritesAdapter by lazy { FavoritesAdapter() }
 
     override fun onBindViewModel(viewModel: FavoritesViewModel) {
+        viewModel.getWallPapers()
         initRecyclerView()
         observeStates(viewModel)
         configureBackNavigation()

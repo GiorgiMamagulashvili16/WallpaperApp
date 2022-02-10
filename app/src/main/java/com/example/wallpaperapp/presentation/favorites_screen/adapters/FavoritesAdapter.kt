@@ -24,7 +24,7 @@ class FavoritesAdapter : ListAdapter<Photo, FavoritesAdapter.WallpaperVH>(ItemDi
     }
 
     override fun onBindViewHolder(holder: WallpaperVH, position: Int) {
-        holder.onBind(getItem(position))
+        holder.onBind(getItem(position), onItemClick)
     }
 
     fun setOnItemClickListener(action: (Photo) -> Unit){
@@ -34,10 +34,14 @@ class FavoritesAdapter : ListAdapter<Photo, FavoritesAdapter.WallpaperVH>(ItemDi
     class WallpaperVH(private val binding: WallpaperImageItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun onBind(photo: Photo) {
+        fun onBind(photo: Photo, onClick: ((wallPaper: Photo) -> Unit)?) {
             with(binding) {
                 wallpaperImageView.loadImage(photo.src.portrait)
                 wallpaperTitleTextView.text = photo.alt
+
+                root.setOnClickListener {
+                    onClick?.invoke(photo)
+                }
             }
         }
 

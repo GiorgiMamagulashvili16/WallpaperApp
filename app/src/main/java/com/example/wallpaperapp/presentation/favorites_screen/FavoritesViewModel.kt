@@ -14,16 +14,12 @@ class FavoritesViewModel(
     private val getSavedWallPapersUseCase: GetSavedWallPapersUseCase
 ): ViewModel() {
 
-    init {
-        getWallPapers()
-    }
-
     private val wallpapersScreenStateFlow =
         MutableStateFlow<FavoritesScreenState>(FavoritesScreenState.Idle)
     val wallpapersScreenState: StateFlow<FavoritesScreenState> =
         wallpapersScreenStateFlow.asStateFlow()
 
-    private fun getWallPapers() = viewModelScope.launch(Dispatchers.IO) {
+    fun getWallPapers() = viewModelScope.launch(Dispatchers.IO) {
         try {
             val data = getSavedWallPapersUseCase.getWallPapers()
             wallpapersScreenStateFlow.emit(FavoritesScreenState.Success(data))
