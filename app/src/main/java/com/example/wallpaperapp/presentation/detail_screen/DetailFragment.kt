@@ -46,14 +46,14 @@ class DetailFragment : BaseFragment<DetailFragmentBinding, DetailViewModel>() {
             lockScreenButton.setOnClickListener {
                 launchLifecycle {
                     vM.setImageAtLockScreen(
-                        args.wallpaper.src.portrait.getAsBitmap(requireContext(), 900, 1200)
+                        args.wallpaper.src.portrait.getAsBitmap(requireContext(), 800, 1200)
                     )
                 }
             }
             homeButton.setOnClickListener {
                 launchLifecycle {
                     vM.setImageAtHomeScreen(
-                        args.wallpaper.src.portrait.getAsBitmap(requireContext(), 900, 1200)
+                        args.wallpaper.src.portrait.getAsBitmap(requireContext(), 800, 1200)
                     )
                 }
             }
@@ -62,10 +62,8 @@ class DetailFragment : BaseFragment<DetailFragmentBinding, DetailViewModel>() {
 
     private fun observeIsSavedWallpaper(viewModel: DetailViewModel) {
         viewModel.isWallpaperSaved.observe(viewLifecycleOwner, {
-            if (it) {
-                binding.favoritesButton.setColorFilter(Color.RED)
-            } else {
-                binding.favoritesButton.setColorFilter(Color.WHITE)
+            with(binding.favoritesButton) {
+                setColorFilter(if (it) Color.RED else Color.WHITE)
             }
         })
     }
