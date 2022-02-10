@@ -7,6 +7,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
+import com.example.wallpaperapp.R
 import com.example.wallpaperapp.databinding.WallpapersFragmentBinding
 import com.example.wallpaperapp.domain.util.extensions.flowObserver
 import com.example.wallpaperapp.presentation.base.BaseFragment
@@ -38,6 +39,13 @@ class WallpapersFragment : BaseFragment<WallpapersFragmentBinding, WallpapersVie
         viewModel.setCategories()
         recyclerViewListeners()
         viewPagerListeners(viewModel)
+        configureFavoritesNavigation()
+    }
+
+    private fun configureFavoritesNavigation(){
+        binding.favoritesButton.setOnClickListener {
+            findNavController().navigate(R.id.action_wallpapersFragment_to_favoritesFragment)
+        }
     }
 
     private fun configureSearch(viewModel: WallpapersViewModel) {
@@ -54,15 +62,15 @@ class WallpapersFragment : BaseFragment<WallpapersFragmentBinding, WallpapersVie
     private fun observeWallpapers(viewModel: WallpapersViewModel) {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.wallpapersScreenState.collect {
+                binding.wallpaperProgressBar.isVisible = false
                 when (it) {
                     is WallpapersScreenStates.Success -> {
                         wallpapersAdapter.submitList(it.data)
-                        binding.wallpaperProgressBar.isVisible = false
                     }
                     is WallpapersScreenStates.Error -> {
                     }
                     is WallpapersScreenStates.Loading -> {
-
+                        binding.wallpaperProgressBar.isVisible = true
                     }
                     else -> Unit
                 }

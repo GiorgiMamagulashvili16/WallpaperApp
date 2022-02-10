@@ -12,12 +12,6 @@ import com.example.wallpaperapp.data.repository.ImageRepositoryImpl
 import com.example.wallpaperapp.data.repository.SavedWallpaperRepositoryImpl
 import com.example.wallpaperapp.domain.repository.ImagesRepository
 import com.example.wallpaperapp.domain.repository.SavedWallpaperRepository
-import com.example.wallpaperapp.domain.usecase.is_image_saved_usecase.IsImageSavedUseCase
-import com.example.wallpaperapp.domain.usecase.is_image_saved_usecase.IsImageSavedUseCaseImpl
-import com.example.wallpaperapp.domain.usecase.remove_wallpaper_usecase.RemoveWallpaperImpl
-import com.example.wallpaperapp.domain.usecase.remove_wallpaper_usecase.RemoveWallpaperUseCase
-import com.example.wallpaperapp.domain.usecase.save_wallpaper_usecase.SaveWallpaperUseCase
-import com.example.wallpaperapp.domain.usecase.save_wallpaper_usecase.SaveWallpaperUseCaseImpl
 import com.example.wallpaperapp.domain.usecase.GetWallPapersUseCase
 import com.example.wallpaperapp.domain.usecase.GetWallPapersUseCaseImpl
 import com.example.wallpaperapp.presentation.detail_screen.DetailFragment
@@ -58,6 +52,14 @@ val detailsScreenModule = module {
         factory<SaveWallpaperUseCase> { SaveWallpaperUseCaseImpl(get()) }
         factory<RemoveWallpaperUseCase> { RemoveWallpaperImpl(get()) }
         factory<IsImageSavedUseCase> { IsImageSavedUseCaseImpl(get()) }
+    }
+}
+
+val favoritesScreenModule = module {
+    scope<FavoritesFragment>{
+        factory<SavedWallpaperRepository> { SavedWallpaperRepositoryImpl(get(), get(), get()) }
+        factory<GetSavedWallPapersUseCase> { GetSavedWallPapersUseCaseImpl(get()) }
+        viewModel{ FavoritesViewModel(get()) }
     }
 }
 
