@@ -11,6 +11,12 @@ import com.example.wallpaperapp.data.network.interceptors.NetworkConnectionInter
 import com.example.wallpaperapp.data.repository.ImageRepositoryImpl
 import com.example.wallpaperapp.data.repository.SavedWallpaperRepositoryImpl
 import com.example.wallpaperapp.domain.repository.ImagesRepository
+import com.example.wallpaperapp.domain.repository.SavedWallpaperRepository
+import com.example.wallpaperapp.domain.usecase.GetWallPapersUseCase
+import com.example.wallpaperapp.domain.usecase.GetWallPapersUseCaseImpl
+import com.example.wallpaperapp.presentation.detail_screen.DetailFragment
+import com.example.wallpaperapp.presentation.detail_screen.DetailViewModel
+import com.example.wallpaperapp.presentation.detail_screen.provideWallpaperInstance
 import com.example.wallpaperapp.presentation.wallpapers_screen.WallpapersFragment
 import com.example.wallpaperapp.presentation.wallpapers_screen.WallpapersViewModel
 import org.koin.android.ext.koin.androidContext

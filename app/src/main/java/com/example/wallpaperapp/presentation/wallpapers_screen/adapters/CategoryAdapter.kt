@@ -9,8 +9,10 @@ import com.example.wallpaperapp.domain.models.Category
 import com.example.wallpaperapp.domain.util.ItemDiffUtil
 import com.example.wallpaperapp.domain.util.extensions.loadImage
 
-class CategoryAdapter(private val onClick: (String) -> Unit) :
+class CategoryAdapter :
     ListAdapter<Category, CategoryAdapter.CategoryVH>(ItemDiffUtil<Category>()) {
+
+    var onClick: ((String) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryVH {
         return CategoryVH(
@@ -28,13 +30,13 @@ class CategoryAdapter(private val onClick: (String) -> Unit) :
 
     class CategoryVH(private val binding: CategoryItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun onBind(category: Category, onClick: (String) -> Unit) {
+        fun onBind(category: Category, onClick: ((String) -> Unit)?) {
             with(binding) {
                 backgroundImageView.loadImage(category.backgroundImageUrl)
                 categoryTextView.text = category.categoryName
 
                 root.setOnClickListener {
-                    onClick(category.categoryName)
+                    onClick?.invoke(category.categoryName)
                 }
             }
         }

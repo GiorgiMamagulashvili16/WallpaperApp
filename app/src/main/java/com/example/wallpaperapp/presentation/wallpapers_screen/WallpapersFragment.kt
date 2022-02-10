@@ -28,11 +28,8 @@ class WallpapersFragment : BaseFragment<WallpapersFragmentBinding, WallpapersVie
     }
 
     private val wallpapersAdapter by lazy { WallpapersAdapter() }
-    private lateinit var categoryAdapter: CategoryAdapter
+    private val categoryAdapter by lazy { CategoryAdapter() }
     override fun onBindViewModel(viewModel: WallpapersViewModel) {
-        categoryAdapter = CategoryAdapter {
-            viewModel.getSearchedWallPapers(it)
-        }
         observeWallpapers(viewModel)
         initRecyclerView(viewModel)
         viewModel.getWallpapers()
@@ -40,6 +37,7 @@ class WallpapersFragment : BaseFragment<WallpapersFragmentBinding, WallpapersVie
         configureSearch(viewModel)
         viewModel.setCategories()
         recyclerViewListeners()
+        viewPagerListeners(viewModel)
     }
 
     private fun configureSearch(viewModel: WallpapersViewModel) {
@@ -98,6 +96,12 @@ class WallpapersFragment : BaseFragment<WallpapersFragmentBinding, WallpapersVie
                     wallpaper
                 )
             )
+        }
+    }
+
+    private fun viewPagerListeners(viewModel: WallpapersViewModel){
+        categoryAdapter.onClick = {
+            viewModel.getSearchedWallPapers(it)
         }
     }
 
