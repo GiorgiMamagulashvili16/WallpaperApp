@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/background_black"
     tools:context=".presentation.detail_screen.DetailFragment">
+
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/favoritesButton"
         android:layout_width="32dp"

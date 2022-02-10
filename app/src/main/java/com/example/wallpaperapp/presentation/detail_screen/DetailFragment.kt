@@ -1,10 +1,9 @@
 package com.example.wallpaperapp.presentation.detail_screen
 
 import android.graphics.Color
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.navigation.fragment.navArgs
 import com.example.wallpaperapp.databinding.DetailFragmentBinding
+import com.example.wallpaperapp.domain.models.Photo
 import com.example.wallpaperapp.domain.util.extensions.getAsBitmap
 import com.example.wallpaperapp.domain.util.extensions.launchLifecycle
 import com.example.wallpaperapp.domain.util.extensions.loadImage
@@ -20,8 +19,11 @@ class DetailFragment : BaseFragment<DetailFragmentBinding, DetailViewModel>() {
 
 
     private val args: DetailFragmentArgs by navArgs()
+    private lateinit var wallPaper: Photo
 
     override fun onBindViewModel(viewModel: DetailViewModel) {
+        wallPaper = args.wallpaper
+        viewModel.isWallpaperSaved(wallPaper.id)
         setInfo()
         setButtonClickListeners(viewModel)
         observeIsSavedWallpaper(viewModel)
@@ -29,7 +31,7 @@ class DetailFragment : BaseFragment<DetailFragmentBinding, DetailViewModel>() {
 
     private fun setInfo() {
         with(binding) {
-            wallpaperDetailImageView.loadImage(args.wallpaper.src.portrait)
+            wallpaperDetailImageView.loadImage(wallPaper.src.portrait)
         }
     }
 
