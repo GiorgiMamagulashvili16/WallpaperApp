@@ -13,9 +13,11 @@ interface WallpapersDao {
     fun saveWallpaper(wallpaper: PhotoEntity)
 
     @Query("DELETE FROM wallpaper WHERE id=:id")
-    fun unSaveWallpaper(id:Int)
+    fun unSaveWallpaper(id: Int)
 
     @Query("SELECT * FROM wallpaper ORDER BY id DESC")
     fun getSavedWallpapers(): List<PhotoEntity>
 
+    @Query("SELECT EXISTS(SELECT * FROM wallpaper WHERE id = :id)")
+    fun isImageSaved(id: Int): Boolean
 }

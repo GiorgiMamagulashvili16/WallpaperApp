@@ -1,5 +1,6 @@
 package com.example.wallpaperapp.presentation.detail_screen
 
+import android.graphics.Color
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.navigation.fragment.navArgs
@@ -24,6 +25,8 @@ class DetailFragment : BaseFragment<DetailFragmentBinding, DetailViewModel>() {
     override fun onBindViewModel(viewModel: DetailViewModel) {
         setInfo()
         setButtonClickListeners(viewModel)
+        observeIsSavedWallpaper(viewModel)
+        viewModel.isWallpaperSaved(args.wallpaper.id)
     }
 
     private fun setInfo() {
@@ -35,7 +38,10 @@ class DetailFragment : BaseFragment<DetailFragmentBinding, DetailViewModel>() {
     private fun setButtonClickListeners(vM: DetailViewModel) {
         with(binding) {
             favoritesButton.setOnClickListener {
-                vM.saveWallpaper(args.wallpaper)
+                if (vM.isWallpaperSaved.value == true)
+                    vM.removeWallpaper(args.wallpaper.id)
+                else
+                    vM.saveWallpaper(args.wallpaper)
             }
             lockScreenButton.setOnClickListener {
                 launchLifecycle {
@@ -52,5 +58,15 @@ class DetailFragment : BaseFragment<DetailFragmentBinding, DetailViewModel>() {
                 }
             }
         }
+    }
+
+    private fun observeIsSavedWallpaper(viewModel: DetailViewModel) {
+        viewModel.isWallpaperSaved.observe(viewLifecycleOwner, {
+            if (it) {
+                binding.favoritesButton.setColorFilter(Color.RED)
+            } else {
+                binding.favoritesButton.setColorFilter(Color.WHITE)
+            }
+        })
     }
 }
