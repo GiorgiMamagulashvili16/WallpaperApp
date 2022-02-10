@@ -1,32 +1,55 @@
 package com.example.wallpaperapp.presentation.detail_screen
 
 import android.app.WallpaperManager
-import android.content.Context
 import android.graphics.Bitmap
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wallpaperapp.domain.models.Photo
-import com.example.wallpaperapp.domain.repository.SavedWallpaperRepository
+import com.example.wallpaperapp.domain.usecase.is_image_saved_usecase.IsImageSavedUseCase
+import com.example.wallpaperapp.domain.usecase.remove_wallpaper_usecase.RemoveWallpaperUseCase
+import com.example.wallpaperapp.domain.usecase.save_wallpaper_usecase.SaveWallpaperUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class DetailViewModel(private val savedWallpaperRepository: SavedWallpaperRepository,private val wallpaperManager: WallpaperManager) :
+class DetailViewModel(
+    private val saveWallpaperUseCase: SaveWallpaperUseCase,
+    private val wallpaperManager: WallpaperManager,
+    private val removeWallpaperUseCase: RemoveWallpaperUseCase,
+    private val isImageSavedUseCase: IsImageSavedUseCase
+) :
     ViewModel() {
+    private val isWallpaperSavedLiveData = MutableLiveData<Boolean>()
+    val isWallpaperSaved: LiveData<Boolean> = isWallpaperSavedLiveData
 
     fun saveWallpaper(wallpaper: Photo) {
         viewModelScope.launch(Dispatchers.IO) {
-            savedWallpaperRepository.saveWallpaper(wallpaper)
+            saveWallpaperUseCase.saveWallpaper(wallpaper) {
+                isWallpaperSavedLiveData.postValue(it)
+            }
         }
+    }
+
+    fun removeWallpaper(id: Int) = viewModelScope.launch(Dispatchers.IO) {
+        removeWallpaperUseCase.removeWallpaper(id) {
+            isWallpaperSavedLiveData.postValue(it)
+        }
+    }
+
+    fun isWallpaperSaved(id: Int) = viewModelScope.launch(Dispatchers.IO) {
+        isWallpaperSavedLiveData.postValue(isImageSavedUseCase.isImageSaved(id))
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
     fun setImageAtLockScreen(bitmap: Bitmap) {
         wallpaperManager.setBitmap(bitmap, null, true, WallpaperManager.FLAG_LOCK)
     }
+
     @RequiresApi(Build.VERSION_CODES.N)
-    fun setImageAtHomeScreen(bitmap: Bitmap,) {
+    fun setImageAtHomeScreen(bitmap: Bitmap) {
         wallpaperManager.setBitmap(bitmap)
     }
 }
