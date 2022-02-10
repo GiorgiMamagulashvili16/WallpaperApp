@@ -4,6 +4,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.navigation.fragment.navArgs
 import com.example.wallpaperapp.databinding.DetailFragmentBinding
+import com.example.wallpaperapp.domain.util.extensions.getAsBitmap
 import com.example.wallpaperapp.domain.util.extensions.launchLifecycle
 import com.example.wallpaperapp.domain.util.extensions.loadImage
 import com.example.wallpaperapp.presentation.base.BaseFragment
