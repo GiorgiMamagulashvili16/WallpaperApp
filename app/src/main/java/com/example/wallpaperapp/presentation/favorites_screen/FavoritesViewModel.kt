@@ -2,7 +2,7 @@ package com.example.wallpaperapp.presentation.favorites_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.wallpaperapp.domain.usecase.GetSavedWallPapersUseCase
+import com.example.wallpaperapp.domain.usecase.get_saved_wallpapers.GetSavedWallPapersUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
