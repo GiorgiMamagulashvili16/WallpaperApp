@@ -13,7 +13,7 @@ class WallpaperApp : Application() {
             modules(
                 listOf(
                     networkModule, wallpapersScreenModule, mapperModule, detailsScreenModule,
-                    roomModule
+                    roomModule, favoritesScreenModule
                 )
             )
         }

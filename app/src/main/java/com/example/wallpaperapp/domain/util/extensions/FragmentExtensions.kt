@@ -1,5 +1,6 @@
 package com.example.wallpaperapp.domain.util.extensions
 
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.flow.Flow
@@ -17,4 +18,8 @@ fun Fragment.launchLifecycle(func: suspend () -> Unit) {
     viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
         func.invoke()
     }
+}
+
+fun Fragment.makeToast(message: String?){
+    Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
 }
