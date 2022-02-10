@@ -25,6 +25,7 @@ class DetailFragment : BaseFragment<DetailFragmentBinding, DetailViewModel>() {
     override fun onBindViewModel(viewModel: DetailViewModel) {
         setInfo()
         setButtonClickListeners(viewModel)
+        observeIsSavedWallpaper(viewModel)
     }
 
     private fun setInfo() {
@@ -33,7 +34,7 @@ class DetailFragment : BaseFragment<DetailFragmentBinding, DetailViewModel>() {
         }
     }
 
-    private fun playLottieAnimation(){
+    private fun playLottieAnimation() {
         binding.lotieAnim.playAnimation()
     }
 
