@@ -7,6 +7,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.wallpaperapp.BuildConfig
 import com.example.wallpaperapp.domain.models.Photo
 import com.example.wallpaperapp.domain.repository.SavedWallpaperRepository
 import kotlinx.coroutines.Dispatchers
@@ -21,12 +22,19 @@ class DetailViewModel(private val savedWallpaperRepository: SavedWallpaperReposi
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
     fun setImageAtLockScreen(bitmap: Bitmap) {
-        wallpaperManager.setBitmap(bitmap, null, true, WallpaperManager.FLAG_LOCK)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            wallpaperManager.setBitmap(bitmap, null, true, WallpaperManager.FLAG_LOCK)
+        }else setImageAtBothScreen(bitmap)
     }
-    @RequiresApi(Build.VERSION_CODES.N)
+
     fun setImageAtHomeScreen(bitmap: Bitmap,) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            wallpaperManager.setBitmap(bitmap, null, true, WallpaperManager.FLAG_SYSTEM)
+        }else setImageAtBothScreen(bitmap)
+    }
+
+    fun setImageAtBothScreen(bitmap: Bitmap){
         wallpaperManager.setBitmap(bitmap)
     }
 }

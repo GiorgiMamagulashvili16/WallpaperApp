@@ -2,17 +2,14 @@ package com.example.wallpaperapp.presentation.detail_screen
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.example.wallpaperapp.databinding.DetailFragmentBinding
-import com.example.wallpaperapp.domain.util.extensions.getAsBitmap
 import com.example.wallpaperapp.domain.util.extensions.launchLifecycle
 import com.example.wallpaperapp.domain.util.extensions.loadImage
 import com.example.wallpaperapp.presentation.base.BaseFragment
 import com.example.wallpaperapp.presentation.base.Inflate
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlin.reflect.KClass
+
 @RequiresApi(Build.VERSION_CODES.N)
 class DetailFragment : BaseFragment<DetailFragmentBinding, DetailViewModel>() {
     override val viewModelClass: KClass<DetailViewModel>
@@ -31,7 +28,6 @@ class DetailFragment : BaseFragment<DetailFragmentBinding, DetailViewModel>() {
     private fun setInfo() {
         with(binding) {
             wallpaperDetailImageView.loadImage(args.wallpaper.src.portrait)
-            wallpaperDetailTitleTextView.text = args.wallpaper.alt
         }
     }
 
