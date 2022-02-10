@@ -32,10 +32,15 @@ class DetailFragment : BaseFragment<DetailFragmentBinding, DetailViewModel>() {
         }
     }
 
+    private fun playLottieAnimation(){
+        binding.lotieAnim.playAnimation()
+    }
+
     private fun setButtonClickListeners(vM: DetailViewModel) {
         with(binding) {
             favoritesButton.setOnClickListener {
                 vM.saveWallpaper(args.wallpaper)
+                playLottieAnimation()
             }
             lockScreenButton.setOnClickListener {
                 launchLifecycle {
@@ -43,6 +48,7 @@ class DetailFragment : BaseFragment<DetailFragmentBinding, DetailViewModel>() {
                         args.wallpaper.src.portrait.getAsBitmap(requireContext(), 900, 1200)
                     )
                 }
+                playLottieAnimation()
             }
             homeButton.setOnClickListener {
                 launchLifecycle {
@@ -50,6 +56,7 @@ class DetailFragment : BaseFragment<DetailFragmentBinding, DetailViewModel>() {
                         args.wallpaper.src.portrait.getAsBitmap(requireContext(), 900, 1200)
                     )
                 }
+                playLottieAnimation()
             }
         }
     }
