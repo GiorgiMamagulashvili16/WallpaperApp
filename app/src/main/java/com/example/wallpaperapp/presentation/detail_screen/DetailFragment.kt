@@ -46,8 +46,6 @@ class DetailFragment : BaseFragment<DetailFragmentBinding, DetailViewModel>() {
                     vM.removeWallpaper(args.wallpaper.id)
                 else
                     vM.saveWallpaper(args.wallpaper)
-                vM.saveWallpaper(args.wallpaper)
-                playLottieAnimation()
             }
             lockScreenButton.setOnClickListener {
                 launchLifecycle {
