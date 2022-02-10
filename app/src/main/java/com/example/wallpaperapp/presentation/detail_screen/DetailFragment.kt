@@ -25,14 +25,16 @@ class DetailFragment : BaseFragment<DetailFragmentBinding, DetailViewModel>() {
     override fun onBindViewModel(viewModel: DetailViewModel) {
         setInfo()
         setButtonClickListeners(viewModel)
-        observeIsSavedWallpaper(viewModel)
-        viewModel.isWallpaperSaved(args.wallpaper.id)
     }
 
     private fun setInfo() {
         with(binding) {
             wallpaperDetailImageView.loadImage(args.wallpaper.src.portrait)
         }
+    }
+
+    private fun playLottieAnimation(){
+        binding.lotieAnim.playAnimation()
     }
 
     private fun setButtonClickListeners(vM: DetailViewModel) {
@@ -42,6 +44,8 @@ class DetailFragment : BaseFragment<DetailFragmentBinding, DetailViewModel>() {
                     vM.removeWallpaper(args.wallpaper.id)
                 else
                     vM.saveWallpaper(args.wallpaper)
+                vM.saveWallpaper(args.wallpaper)
+                playLottieAnimation()
             }
             lockScreenButton.setOnClickListener {
                 launchLifecycle {
@@ -49,6 +53,7 @@ class DetailFragment : BaseFragment<DetailFragmentBinding, DetailViewModel>() {
                         args.wallpaper.src.portrait.getAsBitmap(requireContext(), 800, 1200)
                     )
                 }
+                playLottieAnimation()
             }
             homeButton.setOnClickListener {
                 launchLifecycle {
@@ -56,6 +61,7 @@ class DetailFragment : BaseFragment<DetailFragmentBinding, DetailViewModel>() {
                         args.wallpaper.src.portrait.getAsBitmap(requireContext(), 800, 1200)
                     )
                 }
+                playLottieAnimation()
             }
         }
     }
