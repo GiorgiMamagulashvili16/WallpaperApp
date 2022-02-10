@@ -12,7 +12,6 @@ import com.example.wallpaperapp.presentation.base.BaseFragment
 import com.example.wallpaperapp.presentation.base.Inflate
 import kotlin.reflect.KClass
 
-@RequiresApi(Build.VERSION_CODES.N)
 class DetailFragment : BaseFragment<DetailFragmentBinding, DetailViewModel>() {
     override val viewModelClass: KClass<DetailViewModel>
         get() = DetailViewModel::class
