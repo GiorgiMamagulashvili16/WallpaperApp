@@ -107,7 +107,7 @@ class WallpapersFragment : BaseFragment<WallpapersFragmentBinding, WallpapersVie
         }
     }
 
-    private fun viewPagerListeners(viewModel: WallpapersViewModel){
+    private fun viewPagerListeners(viewModel: WallpapersViewModel) {
         categoryAdapter.onClick = {
             viewModel.getSearchedWallPapers(it)
         }

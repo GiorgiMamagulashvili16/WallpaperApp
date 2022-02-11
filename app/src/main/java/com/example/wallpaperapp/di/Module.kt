@@ -1,5 +1,6 @@
 package com.example.wallpaperapp.di
 
+import com.example.wallpaperapp.data.datastore.WallpaperDatastore
 import com.example.wallpaperapp.data.db.provideRoomInstance
 import com.example.wallpaperapp.data.db.provideWallpaperDao
 import com.example.wallpaperapp.data.mappers.*
@@ -57,7 +58,7 @@ val wallpapersScreenModule = module {
 val detailsScreenModule = module {
     scope<DetailFragment> {
         factory<SavedWallpaperRepository> { SavedWallpaperRepositoryImpl(get(), get(), get()) }
-        viewModel { DetailViewModel(get(), get(), get(), get()) }
+        viewModel { DetailViewModel(get(), get(), get(), get(),get()) }
         factory { provideWallpaperInstance(androidContext()) }
         factory<SaveWallpaperUseCase> { SaveWallpaperUseCaseImpl(get()) }
         factory<RemoveWallpaperUseCase> { RemoveWallpaperImpl(get()) }
@@ -66,10 +67,10 @@ val detailsScreenModule = module {
 }
 
 val favoritesScreenModule = module {
-    scope<FavoritesFragment>{
+    scope<FavoritesFragment> {
         factory<SavedWallpaperRepository> { SavedWallpaperRepositoryImpl(get(), get(), get()) }
         factory<GetSavedWallPapersUseCase> { GetSavedWallPapersUseCaseImpl(get()) }
-        viewModel{ FavoritesViewModel(get()) }
+        viewModel { FavoritesViewModel(get()) }
     }
 }
 
@@ -80,4 +81,7 @@ val mapperModule = module {
     single { PhotoDtoMapper(get()) }
     single { PhotoEntityMapper(get()) }
     single { PhotoDomainMapper(get()) }
+}
+val datastoreModule = module {
+    single { WallpaperDatastore(androidContext()) }
 }

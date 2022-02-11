@@ -12,4 +12,5 @@
     <color name="light_gray">#5E5E5E</color>
     <color name="blurry_black">#8F000000</color>
     <color name="blurry_white">#A6FFFFFF</color>
+    <color name="button_color_blue">#0B6AB0</color>
 </resources>
